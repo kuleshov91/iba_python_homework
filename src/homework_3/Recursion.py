@@ -4,27 +4,27 @@
 
 width = int(input("Enter width: "))
 height = int(input("Enter height: "))
-squareCount = 0
-squareEdgesLength = []
+square_count = 0
+square_edges_length = []
 
-def cutRectangle(width, height):
-    global squareCount, squareEdgesLength
+def cut_rectangle(width, height):
+    global square_count, square_edges_length
 
     if width == height:
-        squareCount += 1
-        squareEdgesLength.append(height)
+        square_count += 1
+        square_edges_length.append(height)
         return
 
     if height < width:
-        squareCount += 1
-        squareEdgesLength.append(height)
-        cutRectangle(width - height, height)
+        square_count += 1
+        square_edges_length.append(height)
+        cut_rectangle(width - height, height)
     elif height > width:
-        squareCount += 1
-        squareEdgesLength.append(width)
-        cutRectangle(width, height - width)
+        square_count += 1
+        square_edges_length.append(width)
+        cut_rectangle(width, height - width)
 
-cutRectangle(width, height)
+cut_rectangle(width, height)
 
-print("square quantity: ", squareCount)
-print("square edges length: ", squareEdgesLength)
+print("square quantity: ", square_count)
+print("square edges length: ", square_edges_length)
