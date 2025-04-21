@@ -4,27 +4,27 @@ class Books:
     __books = []
 
     def __init__(self):
-        book = Book("Harry Potter and the Philosopher's Stone", 1997)
+        book = Book("Harry Potter and the Philosopher's Stone", 1997, 15)
         book.set_authors("J. K. Rowling")
         self.__books.append(book)
 
-        book = Book("Harry Potter and the Chamber of Secrets", 1998)
+        book = Book("Harry Potter and the Chamber of Secrets", 1998, 20)
         book.set_authors("J. K. Rowling")
         self.__books.append(book)
 
-        book = Book("Harry Potter and the Prisoner of Azkaban", 1999)
+        book = Book("Harry Potter and the Prisoner of Azkaban", 1999, 22)
         book.set_authors("J. K. Rowling")
         self.__books.append(book)
 
-        book = Book("The Road", 2006)
+        book = Book("The Road", 2006, 18)
         book.set_authors("Cormac McCarthy")
         self.__books.append(book)
 
-        book = Book("Good Omens", 1990)
+        book = Book("Good Omens", 1990, 14)
         book.set_authors("Neil Gaiman", "Terry Pratchett")
         self.__books.append(book)
 
-        book = Book.create_folk("Three Bears")
+        book = Book.create_folk("Three Bears", 9)
         self.__books.append(book)
 
     @staticmethod
@@ -44,11 +44,9 @@ class Books:
     def find_by_author(author):
         books = []
         for book in Books.__books:
-            authors = book.get_authors()
-            if author in authors:
+            if book.__eq__(author):
                 books.append(book)
-        for book in books:
-            print(book)
+        return books
 
     @staticmethod
     def find_over_year(year):
@@ -56,7 +54,6 @@ class Books:
         for book in Books.__books:
             if book.get_year() is None:
                 continue
-            elif book.get_year() >= year:
+            elif book.__ge__(year):
                 books.append(book)
-        for book in books:
-            print(book)
+        return books

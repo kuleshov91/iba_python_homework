@@ -1,26 +1,56 @@
 class Book:
     __id_count = 0
-    __id = 0
-    __title = ''
-    __authors = []
-    __publisher = ''
-    __year = 0
-    __pages = 0
-    __price = 0
-    __cover = ''
 
-    def __init__(self, title, year):
+    def __new__(cls, *args, **kwargs):
+        Book.__id_count += 1
+        return object.__new__(cls)
+
+    def __init__(self, title, year, price):
         self.__title = title
         self.__year = year
-        Book.__id_count += 1
+        self.__price = price
         self.__id = Book.__id_count
 
+    def __del__(self):
+        Book.__id_count -= 1
+
     def __str__(self):
-        return  "id: " + str(self.__id) + "\ntitle: " + self.__title + "\nauthors: " + str(self.__authors) + "\nyear: " + str(self.__year)
+        return  "id: " + str(self.__id) + "\ntitle: " + self.__title + "\nauthors: " + str(self.__authors) + '\nyear: '\
+            + str(self.__year) + "\nprice: " + str(self.__price)
+
+    def __setattr__(self, key, value):
+        if key == 'discount':
+            self.__price = self.__price * (1 - value / 100)
+        else:
+            self.__dict__[key] = value
+
+    def __iadd__(self, other):
+        if not isinstance(other, int):
+            raise ArithmeticError("Right operand should be int")
+        self.__price += other
+        return self
+
+    def __imul__(self, other):
+        if not isinstance(other, (float, int)):
+            raise ArithmeticError("Right operand should be float or int")
+        self.__price *= other
+        return self
+
+    def __eq__(self, other):
+        if not isinstance(other, str):
+            return False
+        if other in self.__authors:
+            return True
+        else: return False
+
+    def __ge__(self, other):
+        if not isinstance(other, int):
+            raise ArithmeticError("Right operand should be int")
+        return True if self.__year >= other else False
 
     @classmethod
-    def create_folk(cls, title):
-        book = cls(title, None)
+    def create_folk(cls, title, price):
+        book = cls(title, None, price)
         book.set_authors("Folk Work")
         return book
 
